@@ -17,4 +17,24 @@ public class Transaction {
      * the account in which the transaction was performed
      */
     private Account inAccount;
+    /**
+     * create new transaction without message
+     * @param amount
+     * @param inAccount
+     */
+    public Transaction(double amount, Account inAccount){
+        this.amount=amount;
+        this.inAccount = inAccount;
+        this.timestamp = new Date();
+    }
+    /**
+     * create new transaction with message
+     * @param amount
+     * @param inAccount
+     * @param memo
+     */
+    public Transaction(double amount, Account inAccount, String memo){
+        this(amount, inAccount);
+        this.memo = memo;
+    }
 }

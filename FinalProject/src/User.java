@@ -1,6 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.lang.System;
 
 public class User {
     /**
@@ -49,7 +50,34 @@ public class User {
 
         System.out.printf("New user %s, %s with ID %s created.\n", lastName,firstName,this.uuid);
     }
+    /**
+     * adds account to user
+     * @param account account to add
+     */
     public void addAccount(Account account) {
         this.accounts.add(account);
+    }
+    /**
+     * 
+     * @return the users UUID
+     */
+    public String getUUID() {
+        return this.uuid;
+    }
+
+    /**
+     * check wether a given pin matches user pin
+     * @param pin the pin to check
+     * @return if pin is correct
+     */
+    public boolean validatePin(String pin) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            return MessageDigest.isEqual(md.digest(pin.getBytes()), this.pinHash);
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("error, caught noSuchAlgorithimException");
+            e.printStackTrace();
+        };
+        return false;
     }
 }
