@@ -90,7 +90,7 @@ public class User {
 
     public void printAccountSummary() {
         System.out.printf("\n\n%s's accounts summary\n", this.firstName);
-        for (int a = 0; a < this.accounts.size() - 1; a++) {
+        for (int a = 0; a < this.accounts.size(); a++) {
             System.out.printf("%d) %s\n", a + 1, this.accounts.get(a).getSummary());
         }
     }
@@ -101,5 +101,13 @@ public class User {
 
     public int numAccounts() {
         return this.accounts.size();
+    }
+
+    public void printAcctTransHistory(int theAcct) {
+        this.accounts.get(theAcct).printTransHistory();
+    }
+
+    public double getAcctBal(int fromAcct) {
+        return this.accounts.get(fromAcct).getBalance();
     }
 }

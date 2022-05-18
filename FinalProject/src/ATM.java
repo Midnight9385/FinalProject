@@ -65,6 +65,35 @@ public class ATM {
     }
 
     private static void transfer(User curUser, Scanner sc) {
+        int fromAcct;
+        int toAcct;
+        double amount;
+        double acctBal;
+
+        do {
+            System.out.printf("Enter the number (1-%d) of the account\nto transfer from : ", curUser.numAccounts());
+            fromAcct = sc.nextInt() - 1;
+            if (fromAcct < 0 || fromAcct >= curUser.numAccounts()) {
+                System.out.println("idot");
+            }
+        } while (fromAcct < 0 || fromAcct >= curUser.numAccounts());
+        acctBal = curUser.getAcctBal(fromAcct);
+
+        do {
+            System.out.printf("Enter the number (1-%d) of the account\nto transfer to : ", curUser.numAccounts());
+            toAcct = sc.nextInt() - 1;
+            if (toAcct < 0 || toAcct >= curUser.numAccounts()) {
+                System.out.println("idot");
+            }
+        } while (toAcct < 0 || toAcct >= curUser.numAccounts());
+
+        do {
+            System.out.printf("Enter the amount you want to transfer (max : $%.02f): $", acctBal);
+            amount = sc.nextDouble();
+            if (amount <= 0 || amount > acctBal) {
+                System.out.print("idot");
+            }
+        } while (amount <= 0 || amount > acctBal);
     }
 
     private static void deposit(User curUser, Scanner sc) {
@@ -84,6 +113,7 @@ public class ATM {
                 System.out.println("idot");
             }
         } while (theAcct < 0 || theAcct >= curUser.numAccounts());
+        curUser.printAcctTransHistory(theAcct);
     }
 
     private static User mainMenuPrompt(Bank theBank, Scanner sc) {
