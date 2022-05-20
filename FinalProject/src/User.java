@@ -110,4 +110,12 @@ public class User {
     public double getAcctBal(int fromAcct) {
         return this.accounts.get(fromAcct).getBalance();
     }
+
+    public String getAcctUUID(int toAcct) {
+        return accounts.get(toAcct).getUUID();
+    }
+
+    public void addAcctTransaction(int fromAcct, double amount, String memo) {
+        this.accounts.get(fromAcct).addAcctTransaction(amount, memo);
+    }
 }

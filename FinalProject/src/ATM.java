@@ -94,12 +94,75 @@ public class ATM {
                 System.out.print("idot");
             }
         } while (amount <= 0 || amount > acctBal);
+
+        curUser.addAcctTransaction(fromAcct, -1 * amount,
+                String.format("tranfer to accout %s", curUser.getAcctUUID(toAcct)));
+        curUser.addAcctTransaction(toAcct, amount,
+                String.format("tranfer to accout %s", curUser.getAcctUUID(fromAcct)));
     }
 
     private static void deposit(User curUser, Scanner sc) {
+        int toAcct;
+        double amount;
+        double acctBal;
+        String memo;
+
+        do {
+            System.out.printf("Enter the number (1-%d) of the account\nto deposit to : ", curUser.numAccounts());
+            toAcct = sc.nextInt() - 1;
+            if (toAcct < 0 || toAcct >= curUser.numAccounts()) {
+                System.out.println("idot");
+            }
+        } while (toAcct < 0 || toAcct >= curUser.numAccounts());
+
+        acctBal = curUser.getAcctBal(toAcct);
+
+        do {
+            System.out.printf("Enter the amount you want to transfer: $");
+            amount = sc.nextDouble();
+            if (amount <= 0) {
+                System.out.print("idot");
+            }
+        } while (amount <= 0);
+
+        sc.nextLine();
+
+        System.out.println("Enter a memo: ");
+        memo = sc.nextLine();
+
+        curUser.addAcctTransaction(toAcct, amount, memo);
     }
 
     private static void withdraw(User curUser, Scanner sc) {
+        int fromAcct;
+        double amount;
+        double acctBal;
+        String memo;
+
+        do {
+            System.out.printf("Enter the number (1-%d) of the account\nto withdraw from : ", curUser.numAccounts());
+            fromAcct = sc.nextInt() - 1;
+            if (fromAcct < 0 || fromAcct >= curUser.numAccounts()) {
+                System.out.println("idot");
+            }
+        } while (fromAcct < 0 || fromAcct >= curUser.numAccounts());
+
+        acctBal = curUser.getAcctBal(fromAcct);
+
+        do {
+            System.out.printf("Enter the amount you want to transfer (max : $%.02f): $", acctBal);
+            amount = sc.nextDouble();
+            if (amount <= 0 || amount > acctBal) {
+                System.out.print("idot");
+            }
+        } while (amount <= 0 || amount > acctBal);
+
+        sc.nextLine();
+
+        System.out.println("Enter a memo: ");
+        memo = sc.nextLine();
+
+        curUser.addAcctTransaction(fromAcct, -1 * amount, memo);
     }
 
     private static void showTransHistory(User curUser, Scanner sc) {
